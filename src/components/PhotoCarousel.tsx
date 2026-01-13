@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 
@@ -198,13 +198,21 @@ const Lightbox = ({
   );
 };
 
-const PhotoCarousel = () => {
+export interface PhotoCarouselHandle {
+  open: () => void;
+}
+
+const PhotoCarousel = forwardRef<PhotoCarouselHandle>((_, ref) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [fadeState, setFadeState] = useState<'in' | 'out'>('in');
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxFade, setLightboxFade] = useState<'in' | 'out'>('in');
+
+  useImperativeHandle(ref, () => ({
+    open: () => openLightbox(0)
+  }));
 
   const goToNext = useCallback(() => {
     setFadeState('out');
@@ -315,7 +323,7 @@ const PhotoCarousel = () => {
               onClick={() => openLightbox(currentIndex)}
             >
               <div className="w-14 h-14 rounded-full bg-card/90 flex items-center justify-center text-primary">
-                <ZoomIn size={24} />
+                <ZoomIn size={24} color='#fff' />
               </div>
             </div>
 
@@ -342,6 +350,7 @@ const PhotoCarousel = () => {
         >
           <ChevronRight size={24} className="group-hover:translate-x-0.5 transition-transform" />
         </button>
+        <div>View Photo</div>
 
         {/* Dots Indicator */}
         <div className="flex justify-center gap-3 mt-6">
@@ -391,6 +400,8 @@ const PhotoCarousel = () => {
       />
     </>
   );
-};
+});
+
+PhotoCarousel.displayName = 'PhotoCarousel';
 
 export default PhotoCarousel;

@@ -1,6 +1,7 @@
-import { ChevronDown, Sparkles } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import PhotoCarousel from './PhotoCarousel';
+import { ChevronDown, Image, Images, Sparkles } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import PhotoCarousel, { PhotoCarouselHandle } from './PhotoCarousel';
+import { Button } from './ui/button';
 
 const HeroSection = () => {
   // const bismillahText = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
@@ -8,6 +9,7 @@ const HeroSection = () => {
   const [revealProgress, setRevealProgress] = useState(0);
   const [isRevealing, setIsRevealing] = useState(true);
   const [showTranslation, setShowTranslation] = useState(false);
+  const carouselRef = useRef<PhotoCarouselHandle>(null);
 
   useEffect(() => {
     let animationFrame: number;
@@ -190,16 +192,17 @@ const HeroSection = () => {
 
               {/* Photo Container */}
               <div className="relative w-64 h-80 sm:w-72 sm:h-96 md:w-80 md:h-[420px] rounded-xl overflow-hidden shadow-2xl shadow-black/30">
-                <PhotoCarousel />
+                <PhotoCarousel ref={carouselRef} />
 
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
               </div>
 
               {/* Floating Badge */}
-              {/* <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-secondary to-amber-500 text-background text-xs sm:text-sm font-semibold px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
-                Looking for a Life Partner
-              </div> */}
+              <Button onClick={() => carouselRef.current?.open()} className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-secondary to-amber-500 text-background text-xs sm:text-sm font-semibold px-5 py-2 rounded-full shadow-lg whitespace-nowrap">
+                View Photos <Images />
+              </Button>
+
             </div>
           </div>
         </div>
