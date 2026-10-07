@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { User, GraduationCap, Briefcase, Users, Mail, Sparkles } from 'lucide-react';
+import { useLenis } from 'lenis/react';
+import { User, Images, GraduationCap, Briefcase, Users, Mail, Sparkles } from 'lucide-react';
 
 const navItems = [
   { label: 'About', href: '#about', icon: User },
+  { label: 'Gallery', href: '#gallery', icon: Images },
   { label: 'Education', href: '#education', icon: GraduationCap },
   { label: 'Career', href: '#career', icon: Briefcase },
   { label: 'Family', href: '#family', icon: Users },
@@ -12,6 +14,7 @@ const navItems = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,14 +33,18 @@ const Header = () => {
       }
     };
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (lenis) {
+      lenis.scrollTo(href, { offset: -80, duration: 1.2 });
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 

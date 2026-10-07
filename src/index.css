@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cinzel:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -413,6 +413,44 @@
     }
   }
 
+  /* Dual Marquee Animation */
+  @keyframes marqueeLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marqueeRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee-left {
+    display: flex;
+    width: max-content;
+    animation: marqueeLeft 32s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-marquee-right {
+    display: flex;
+    width: max-content;
+    animation: marqueeRight 32s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-wrapper:hover .animate-marquee-left,
+  .marquee-wrapper:hover .animate-marquee-right {
+    animation-play-state: paused;
+  }
+
   /* Shimmer Effect */
   .shimmer {
     background: linear-gradient(90deg,
@@ -592,4 +630,55 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+/* Luxury Agency & High-End Design Utilities */
+.double-bezel-shell {
+  padding: 0.375rem;
+  border-radius: 2rem;
+  background: linear-gradient(145deg, hsl(43 85% 55% / 0.25) 0%, hsl(163 45% 18% / 0.4) 50%, hsl(43 80% 50% / 0.1) 100%);
+  border: 1px solid hsl(43 80% 55% / 0.3);
+  box-shadow: 0 25px 50px -12px hsl(0 0% 0% / 0.7), inset 0 1px 1px hsl(45 100% 80% / 0.3);
+}
+
+.double-bezel-inner {
+  border-radius: calc(2rem - 0.375rem);
+  background: hsl(163 50% 11% / 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(43 80% 60% / 0.15);
+  box-shadow: inset 0 1px 1px hsl(255 255% 255% / 0.1);
+}
+
+.gold-glow-orb {
+  background: radial-gradient(circle, hsl(43 85% 55% / 0.18) 0%, hsl(43 80% 50% / 0.05) 50%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.emerald-glow-orb {
+  background: radial-gradient(circle, hsl(163 60% 25% / 0.4) 0%, hsl(163 50% 15% / 0.1) 50%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.text-gold-luxury {
+  background: linear-gradient(135deg, #FFF6D6 0%, #E6C875 30%, #BF953F 55%, #FCF6BA 80%, #AA771C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 35px hsl(43 85% 55% / 0.25);
+}
+
+.border-gold-shimmer {
+  border: 1px solid transparent;
+  background: linear-gradient(hsl(163 50% 12%), hsl(163 50% 12%)) padding-box,
+              linear-gradient(135deg, hsl(43 90% 65%), hsl(163 50% 25%), hsl(43 85% 55%)) border-box;
+}
+
+.island-btn {
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.island-btn:active {
+  transform: scale(0.98);
 }
